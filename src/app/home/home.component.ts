@@ -69,9 +69,4 @@ export class HomeComponent implements OnInit {
       this.loadTodoList();
     });
   }
-
-  private errorHandling(error: any): void {
-    window.alert("An error has occured!");
-    console.log("An error has occured: " + error.message);
-  }
 }
