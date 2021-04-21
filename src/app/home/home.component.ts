@@ -39,9 +39,8 @@ export class HomeComponent implements OnInit {
       if(result){
         this.todoApiService.new(result).subscribe((newToDo: any)=>{
           window.alert("To-Do '"+ newToDo.description + "' registred !");
-        }, error => {
-          this.errorHandling(error);
-        }, () => {
+        }, error => { }
+        , () => {
           this.loadTodoList();
         });
       }
@@ -51,9 +50,8 @@ export class HomeComponent implements OnInit {
   deleteToDo(id: number): void{
     this.todoApiService.delete(id).subscribe(()=>{
       window.alert("To-Do has been deleted.");
-    }, error => {
-      this.errorHandling(error);
-    }, () => {
+    }, error => { }
+    , () => {
       this.loadTodoList();
     });
   }
@@ -64,13 +62,10 @@ export class HomeComponent implements OnInit {
       description : toDo.description,
       isDone : isChecked
     };
-    this.todoApiService.replace(alteredToDo).subscribe((toDo: any)=>{
-      //console.log(toDo);
+    this.todoApiService.replace(alteredToDo).subscribe((resp: any)=>{
       window.alert("To-Do has been altered.");
-    }
-    /*, error => {
-      this.errorHandling(error);
-    }*/, () => {
+    }, error => { }
+    , () => {
       this.loadTodoList();
     });
   }
