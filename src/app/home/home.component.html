@@ -1,16 +1,23 @@
 <div style="padding: 13px;">
   <mat-spinner *ngIf="toDoList.length === 0"></mat-spinner>
 
-  <mat-card *ngFor="let toDo of toDoList" style="margin-top:10px;">
+  <mat-card *ngFor="let toDo of toDoList" style="margin-top:10px; margin-bottom:10px;">
       <mat-card-header>
           <mat-card-title>{{toDo.id}}</mat-card-title>
-          <mat-card-subtitle>Feito ? {{toDo.done ? 'Sim' : 'Não'}}</mat-card-subtitle>
+          <mat-card-subtitle>
+            <mat-checkbox #isDoneCheckbox [checked]="toDo.done" (click)="markAsDoneOrUndone(toDo,!isDoneCheckbox.checked)">Feito ?</mat-checkbox>
+          </mat-card-subtitle>
       </mat-card-header>
       <mat-card-content>
           <p>
-              {{toDo.description}}
+            {{toDo.description}}
           </p>
       </mat-card-content>
+      <mat-card-actions>
+        <button mat-mini-fab color="primary" title="Apagar" (click)="deleteToDo(toDo.id)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </mat-card-actions>
   </mat-card>
-  <button mat-raised-button color="primary">New TO-DO</button>
+  <button mat-raised-button color="primary" (click)="openNewToDoDialog()">New TO-DO</button>
 </div>

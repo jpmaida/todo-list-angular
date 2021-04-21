@@ -1,0 +1,15 @@
+<h1 mat-dialog-title>New TO-DO</h1>
+<div mat-dialog-content>
+  <mat-form-field>
+    <mat-label>Description</mat-label>
+    <input matInput [(ngModel)]="data.description" />
+  </mat-form-field>
+  <!--<mat-form-field>-->
+    <!--mat-label>Done ?</mat-label-->
+    <mat-checkbox [(ngModel)]="data.isDone">Done ?</mat-checkbox>
+  <!--</mat-form-field>-->
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button [mat-dialog-close]="data" cdkFocusInitial color="primary">OK</button>
+  <button mat-raised-button [mat-dialog-close]>No Thanks</button>
+</div>
