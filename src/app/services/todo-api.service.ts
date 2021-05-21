@@ -2,18 +2,29 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
+import { AppConfigService } from './app-config.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TodoApiService {
 
-  //private BASE_SERVER_URL = "http://localhost:8080";
-  private BASE_SERVER_URL = "";
+   private BASE_SERVER_URL = "http://localhost:8080";
   private BASE_API_URL = "/api/todolist";
   private BASE_FULL_URL = this.BASE_SERVER_URL + this.BASE_API_URL;
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {}
+
+  async loadConfig (config: any) {
+    console.log(`****** TodoApiService.loadConfig (config: ${JSON.stringify(config)}) ******`);
+    console.log(`****** BASE_SERVER_URL original: ${this.BASE_SERVER_URL} ******`);
+    console.log(`****** BASE_FULL_URL original: ${this.BASE_FULL_URL} ******`);
+    this.BASE_SERVER_URL = config.todoListServerUrl;
+    this.BASE_FULL_URL = this.BASE_SERVER_URL + this.BASE_API_URL;
+    console.log(`****** BASE_SERVER_URL alterado: ${this.BASE_SERVER_URL} ******`);
+    console.log(`****** BASE_FULL_URL alterado: ${this.BASE_FULL_URL} ******`);
+    return config
+  }
 
   public all(){
 	  return this.httpClient

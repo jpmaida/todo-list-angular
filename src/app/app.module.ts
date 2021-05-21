@@ -1,5 +1,5 @@
 import { FormsModule } from '@angular/forms';
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatIconModule } from "@angular/material/icon";
@@ -17,7 +17,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { HomeComponent } from './home/home.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NewTodoDialogComponent } from './new-todo-dialog/new-todo-dialog.component';
+import { AppConfigService } from './services/app-config.service';
+import { TodoApiService } from './services/todo-api.service';
 
+export function initConfig (appConfig: AppConfigService) {
+  return appConfig.loadConfig()
+}
 @NgModule({
   declarations: [
     AppComponent,
@@ -40,7 +45,20 @@ import { NewTodoDialogComponent } from './new-todo-dialog/new-todo-dialog.compon
     FormsModule,
     MatInputModule
   ],
-  providers: [],
+  providers: [{
+    provide: APP_INITIALIZER,
+    deps: [AppConfigService, TodoApiService],
+    multi: true,
+    useFactory: (
+      appConfigSvc: AppConfigService,
+      todoApiService: TodoApiService
+    ) => {
+      return async () => {
+        const config = await appConfigSvc.loadConfig();
+        return await todoApiService.loadConfig(config);
+      }
+    }
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
