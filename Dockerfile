@@ -1,5 +1,4 @@
 FROM registry.access.redhat.com/ubi8/nodejs-12:1
-WORKDIR /opt/todolist-frontend
 COPY src src/
 COPY package.json package-lock.json angular.json tsconfig.app.json tsconfig.json ./
 RUN npm install
